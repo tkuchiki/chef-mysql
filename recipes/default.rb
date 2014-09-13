@@ -1,19 +1,16 @@
-version = node[:mysql][:version]
-
-if version == 5.5
+if node[:mysql][:version] == 5.5
   package "centos-release-SCL"
 
   client_package = "mysql55-mysql"
   dev_package    = "mysql55-mysql-devel"
   server_package = "mysql55-mysql-server"
   service_name   = "mysql55-mysqld"
-elsif version == 5.6
-  repo_rpm         = "http://repo.mysql.com/mysql-community-release-el__EL_VER__.noarch.rpm"
-  platform_version = node[:platform_version].gsub(".", "-")
-  rpm              = "#{Chef::Config[:file_cache_path]}/mysql-community-release.noarch.rpm"
+elsif node[:mysql][:version] == 5.6
+  repo_rpm = "http://repo.mysql.com/mysql-community-release-el%s.noarch.rpm" % node[:platform_version].gsub(".", "-")
+  rpm      = "#{Chef::Config[:file_cache_path]}/mysql-community-release.noarch.rpm"
 
   remote_file rpm do
-    source repo_rpm.gsub("__EL_VER__", platform_version)
+    source repo_rpm
   end
 
   rpm_package rpm do
