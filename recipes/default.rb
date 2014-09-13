@@ -3,17 +3,20 @@ if node[:mysql][:version] == 5.5
 
   client_package = "mysql55-mysql"
 elsif node[:mysql][:version] == 5.6
-  repo_rpm = "http://repo.mysql.com/mysql-community-release-el%s.noarch.rpm" % node[:platform_version].gsub(".", "-")
-  rpm      = "#{Chef::Config[:file_cache_path]}/mysql-community-release.noarch.rpm"
+  repo_rpm   = "http://repo.mysql.com/mysql-community-release-el%s.noarch.rpm" % node[:platform_version].gsub(".", "-")
+  rpm        = "#{Chef::Config[:file_cache_path]}/#{File.basename(repo_rpm)}"
+  is_install = "rpm -q mysql-community-release"
 
   remote_file rpm do
     source repo_rpm
+
+    not_if is_install
   end
 
   rpm_package rpm do
     action :install
 
-    not_if "rpm -q mysql-community-release"
+    not_if is_install
   end
 
   file rpm do
