@@ -41,7 +41,7 @@ slow_query_log = 1
 long_query_time = 3
 log_slow_slave_statements = 1
 
-server-id       = <%= node[:ipaddress].delete(".") %>
+server-id       = <%= node[:ipaddress].split('.')[1..-1].join('') %>
 
 ignore-builtin-innodb
 plugin-load=innodb=ha_innodb_plugin.so;innodb_trx=ha_innodb_plugin.so;innodb_locks=ha_innodb_plugin.so;innodb_lock_waits=ha_innodb_plugin.so;innodb_cmp=ha_innodb_plugin.so;innodb_cmp_reset=ha_innodb_plugin.so;innodb_cmpmem=ha_innodb_plugin.so;innodb_cmpmem_reset=ha_innodb_plugin.so

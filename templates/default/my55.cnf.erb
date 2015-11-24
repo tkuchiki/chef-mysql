@@ -43,7 +43,7 @@ slow_query_log = 1
 long_query_time = 3
 log_slow_slave_statements = 1
 
-server-id       = <%= node[:ipaddress].delete(".") %>
+server-id       = <%= node[:ipaddress].split('.')[1..-1].join('') %>
 
 innodb_strict_mode
 innodb_data_file_path = ibdata1:10M:autoextend
