@@ -23,7 +23,7 @@ Attribute | Description | Type | Default
     "packages": [
       "mysql-community-embedded"
     ],
-    "version: 5.6
+    "version": 5.6
   }
 }
 ```
